@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    {% if results_object is none %}
+        {% if location_object is none %}
+            <h1>NO LOCATION AVAILABLE</h1>
+        {% else %}
+            <b>Location information:</b>
+            <br/>
+            Name: {{ location_object['city'] }}
+            <br/>
+            Zip code: {{ location_object['zip_code']}}
+            <br/>
+            Latitude: {{ location_object['latitude']}}
+            <br/>
+            Longitude: {{ location_object['longitude']}}
+            <br/>
+            Population: {{ location_object['population']}}
+            <br/>
+            Number of check-ins: {{ location_object['num_check-ins']}}
+            <br/>
+            Number of written reviews: {{ location_object['num_reviews'] }}
+            <br/>
+            <br/>
+
+            {% if weather_data is none%}
+                <h1>ERROR IN RETRIEVING WEATHER DATA</h1>
+            {% else %}
+                Time of the weather report: {{ weather_data.time }}
+                <br/>
+                the textual weather summary: {{ weather_data.summary }}
+                <br/>
+                temperature: {{ weather_data.temperature }}
+                <br/>
+                dew point: {{ weather_data.dewPoint }}
+                <br/>
+                humidity (as a percentage) : {{ weather_data.humidity }}
+            {% endif %}
+
+
+            {% if location_object['review'] is none %}
+                <br/>
+                <br/>
+                <h5>Write a check-in</h5>
+                    <form action="{{ url_for('location') }}" method="POST">
+                        <input type="text" name="review" placeholder="Leave a check-in review">
+
+                        <br/>
+                        <button>Submit</button>
+                    </form>
+            {% else %}
+                <br/>
+                You are checked in
+                <br/>
+                Comment review: {{ location_object['review'] }}
+            {% endif %}
+        {% endif %}
+    {% else %}
+        {% for item in results_object %}
+            <form action="{{ url_for('location') }}" method="POST">
+                <p hidden><input type="text" name="zip_code" value="{{ item['zip_code']}}"></p>
+                <button>{{ item['city'] }}, {{ item['state'] }} ({{ item['zip_code']}})</button>
+            </form>
+        {% endfor %}
+    {% endif %}
+
+
+{% endblock %}

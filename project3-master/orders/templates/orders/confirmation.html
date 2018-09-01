@@ -1,0 +1,23 @@
+{% extends "users/layout.html" %}
+
+{% block body %}
+
+<br/>
+Your order is confirmed!
+<br/>
+Your order number is: <b>{{ order_num }}</b>
+<br/>
+
+
+{% csrf_token %}
+{% for cart_item in cart_items %}
+    {{ cart_item.text }}
+    <br/>
+{% empty %}
+
+{% endfor %}
+
+Total: ${{ total }}
+
+
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends "users/layout.html" %}
+{% block body %}
+
+
+  {% if author.first_name == "" and author.last_name == "" %}
+      <h2>{{ author.username }}</h2>
+  {% else %}
+      <h2>{{ author.first_name }} {{ author.last_name }}</h2>
+  {% endif %}
+
+  <br/>
+
+    Number of posts: {{ posts|length }}
+    <br/>
+    <br/>
+
+    <form id="post" action="{% url 'portfolio' %}" method="post">
+        {% csrf_token %}
+        <select name="view_kind">
+            {% for option in view_kind_enum %}
+                {% if view_kind == option %}
+                    <option value="{{option}}" selected="selected">{{option}}</option>
+                {% else %}
+                    <option value="{{option}}">{{option}}</option>
+                {% endif %}
+
+            {% endfor %}
+        </select>
+
+        <button type="submit">Change view</button>
+        <p hidden><input name="author_id" value="{{ author.id }}"></p>
+    </form>
+
+    <br/>
+    <br/>
+
+    {% if view_kind == 'Tile' %}
+
+      <table class="table">
+        <tbody>
+          <tr>
+              {% for post in posts %}
+                  <td style = "width:33.33%">
+                      <form id="post" action="{% url 'post' %}" method="post">
+                        {% csrf_token %}
+
+                        {% if post.image.url is not None %}
+                            <input type="image" src="{{ post.image.url }}" border="0"
+                                  style="width: auto; max-width: 100%; height: auto; max-height: 100%;"
+                                  alt="Submit" />
+                            <br/>
+                            <small>{{ post.title }}</small>
+                        {% else %}
+                            <button type="submit">{{ post.title }}</button>
+                            <br/>
+                            <small>Written Work</small>
+                        {% endif %}
+
+                         <p hidden><input name="post_id" value="{{ post.id }}"></p>
+                      </form>
+                  </td>
+                  {% if not forloop.last and forloop.counter|divisibleby:3 %}
+                      </tr>
+                      <tr>
+                  {% endif %}
+              {% endfor %}
+          </tr>
+        <tbody>
+      </table>
+    {% elif view_kind == 'Stack' %}
+        {% for post in posts %}
+            <hr/>
+            <form id="post" action="{% url 'post' %}" method="post" style="display: inline-block;">
+                {% csrf_token %}
+                <input type="image" src="{{ post.image.url }}" border="0" style = "width:100%;"  alt="Submit" />
+                <br/>
+                <h6>{{post.text}}</h6>
+                <br/>
+                <b>Title: {{ post.title }}</b>
+                <br/>
+                <small>(Uploaded at: {{ post.timestamp }})</small>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <p hidden><input name="post_id" value="{{ post.id }}"></p>
+            </form>
+            <hr/>
+         {% endfor %}
+    {% endif %}
+
+{% endblock %}

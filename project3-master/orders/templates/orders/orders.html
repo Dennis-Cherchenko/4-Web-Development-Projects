@@ -1,0 +1,32 @@
+{% extends "users/layout.html" %}
+
+{% block body %}
+
+View your orders:
+<br/>
+
+{% for order in order_item_boxes %}
+
+    Order number: <b>{{ order.order_id }}</b>, by {{ order.username }} on {{ order.timestamp }}.
+    {% if order.status == "Completed" %}
+        <span style="color:#1e991a">{{ order.status }} </span>
+    {% else %}
+       <span style="color:blue">{{ order.status }} </span>
+    {% endif %}
+    <br/>
+    {% for cart_item in order.cart_item_boxes %}
+        &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;{{ cart_item.text }}
+        <br/>
+    {% empty %}
+        ERROR, there should not exist order without items
+    {% endfor %}
+
+
+    <br/>
+{% empty %}
+    <li>There are no orders</li>
+{% endfor %}
+
+
+
+{% endblock %}

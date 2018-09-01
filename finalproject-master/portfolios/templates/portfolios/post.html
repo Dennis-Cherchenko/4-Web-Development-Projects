@@ -1,0 +1,82 @@
+{% extends "users/layout.html" %}
+
+{% block body %}
+
+    {% if user.is_authenticated and  post is not None %}
+        <h3>{{ post.title }}</h3>
+        <h5>by {{ author.username }}</h5>
+        <small>Uploaded at: {{ post.timestamp }}</small>
+        <br/>
+        <br/>
+
+
+        {% if post.image.url is not None %}
+        <img src="{{ post.image.url }}" style = "width:100%;" />
+        <br/>
+        <small>{{ post.title }}</small>
+        {% else %}
+
+        {{ post.text }}
+        <br/>
+        <br/>
+        {% endif %}
+
+        <br/>
+        <br/>
+
+        {% if has_liked %}
+            <form action="{% url 'post' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Unlike</button>
+                <p hidden><input name="post_id" value="{{ post.id }}"></p>
+                <p hidden><input name="like" value="unlike"></p>
+            </form>
+        {% else %}
+            <form action="{% url 'post' %}" method="post">
+                {% csrf_token %}
+                <button type="submit">Like</button>
+                <p hidden><input name="post_id" value="{{ post.id }}"></p>
+                <p hidden><input name="like" value="like"></p>
+            </form>
+        {% endif %}
+
+        <b>Num likes: {{ num_likes }}</b>
+
+        {% if comments is defined %}
+            {% load staticfiles %}
+        {% endif %}
+
+        <br/>
+        <br/>
+        {% for comment in comments %}
+
+            <b>{{ comment.author }}</b> &nbsp;{{ comment.timestamp }}
+            <br/>
+            {% if comment.author.id == user.id %}
+                <form action="{% url 'post' %}" method="post">
+                    {% csrf_token %}
+                    <!-- trash icon by Smashicons user on flaticon.com,
+                    https://www.flaticon.com/free-icon/garbage_149343#term=trash&page=1&position=1 -->
+                    <input type="image" src="{% static 'trash.svg' %}" style="height:15px; width:15px"
+                            name="delete_comment_id" value="{{ comment.id }}"/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ comment.text }}
+                    <p hidden><input name="post_id" value="{{ post.id }}"></p>
+                </form>
+            {% else %}
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ comment.text }}
+            {% endif %}
+            <br/>
+        {% endfor %}
+
+        <br/>
+        Add comment
+        <form action="{% url 'post' %}" method="post">
+            {% csrf_token %}
+            <input name="new_comment" type="text"/>
+            <button type="submit">Enter</button>
+            <p hidden><input name="post_id" value="{{ post.id }}"></p>
+        </form>
+
+    {% endif %}
+
+{% endblock %}

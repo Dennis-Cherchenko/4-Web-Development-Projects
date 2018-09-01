@@ -1,0 +1,28 @@
+/*****************************************************************/
+body {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  text-decoration: none;
+  color: #F8F8F2;
+}
+
+body {
+  background-color: #272822;
+}
+
+#channel_display {
+  color: #A6E22E;
+}
+
+#username_display {
+  color: #FD971F;
+}
+
+.username_message {
+  color: #FFE792;
+}
+
+a:link, a:visited {
+  color: #66D9EF;
+}
+
+/*# sourceMappingURL=style.css.map */

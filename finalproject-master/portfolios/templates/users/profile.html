@@ -1,0 +1,17 @@
+{% extends "users/layout.html" %}
+{% block body %}
+
+
+  {% if user.first_name == "" and user.last_name == "" %}
+      <h2>{{ user.username }}</h2>
+  {% else %}
+      <h2>{{ user.first_name }} {{ user.last_name }}</h2>
+  {% endif %}
+
+  <br/>
+
+  Number of posts: {{ posts|length }}
+  <br/>
+  <br/>
+
+{% endblock %}

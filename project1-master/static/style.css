@@ -1,0 +1,40 @@
+/*****************************************************************/
+.footer-text, .header-title, .header-menu, .body-tableOfContents, .body-authorCredit, .body-text, .body-pictureTitle, body {
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+  text-decoration: none;
+}
+
+.body-pictureTitle {
+  color: black;
+}
+
+.body-text {
+  color: #5b5b5b;
+}
+
+.body-authorCredit {
+  color: black;
+  text-align: right;
+}
+
+.body-tableOfContents {
+  color: #5b5b5b;
+}
+
+.header-menu {
+  color: #AAAAAA;
+}
+
+.header-title {
+  color: black;
+}
+
+.footer-text {
+  color: #AAAAAA;
+}
+
+a:hover {
+  color: #4950d8;
+}
+
+/*# sourceMappingURL=style.css.map */

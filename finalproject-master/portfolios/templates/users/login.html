@@ -1,0 +1,40 @@
+{% extends "users/layout.html" %}
+
+{% block body %}
+    {% if message %}
+        <div>
+            {{ message }}
+        </div>
+    {% endif %}
+
+
+    <h2>Login:</h2>
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <input name="username" type="text" placeholder="Username"/>
+        <input name="password" type="password" placeholder="Password"/>
+        <p hidden><input name="isRegister" value="false"></p>
+        <input type="submit" value="Login"/>
+    </form>
+
+    <br/>
+    <br/>
+
+    <h2>Register</h2>
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <input name="first_name" type="text" placeholder="First Name"/>
+        <br/>
+        <input name="last_name" type="text" placeholder="Last Name"/>
+        <br/>
+        <input name="email" type="text" placeholder="Email Address"/>
+        <br/>
+        <input name="username" type="text" placeholder="Username"/>
+        <br/>
+        <input name="password" type="password" placeholder="Password"/>
+        <br/>
+        <p hidden><input name="isRegister" value="true"/></p>
+        <input type="submit" value="Register"/>
+    </form>
+
+{% endblock %}

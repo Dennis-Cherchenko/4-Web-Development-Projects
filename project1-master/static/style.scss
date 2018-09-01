@@ -1,0 +1,59 @@
+$primaryColor: #eeffcc;
+$mainTextColor: black;
+$bodyTextColor: #5b5b5b;
+$headerTextColor: #AAAAAA;
+$footerTextColor: #AAAAAA;
+$linkHoverColor: #4950d8;
+
+/*****************************************************************/
+
+%commonTextStyle {
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+    text-decoration: none;
+}
+
+body {
+    @extend %commonTextStyle;
+}
+
+.body-pictureTitle {
+    @extend %commonTextStyle;
+    color: $mainTextColor;
+}
+
+.body-text {
+    @extend %commonTextStyle;
+    color: $bodyTextColor;
+}
+
+.body-authorCredit {
+    @extend %commonTextStyle;
+    color: $mainTextColor;
+    text-align: right;
+}
+
+.body-tableOfContents {
+   @extend %commonTextStyle;
+   color: $bodyTextColor;
+}
+
+.header-menu {
+    @extend %commonTextStyle;
+    color: $headerTextColor;
+}
+
+.header-title {
+    @extend %commonTextStyle;
+    color: $mainTextColor;
+}
+
+.footer-text {
+    @extend %commonTextStyle;
+    color: $footerTextColor;
+}
+
+a:hover {
+    color: $linkHoverColor;
+}
+
+

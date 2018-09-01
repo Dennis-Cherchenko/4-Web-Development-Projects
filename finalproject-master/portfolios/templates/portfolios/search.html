@@ -1,0 +1,47 @@
+{% extends "users/layout.html" %}
+{% block body %}
+
+
+    <form id="user" action="{% url 'search' %}" method="post">
+        {% csrf_token %}
+        <input name="search_term" type="text"/>
+        <button type="submit">Search</button>
+    </form>
+
+    <br/>
+    <br/>
+
+    {% if results.users != None %}
+        <p>Users</p>
+        <ul>
+            {% for ruser in results.users %}
+            <li>
+                <form id="user" action="{% url 'portfolio' %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit"> {{ ruser.username }} </button>
+                    <p hidden><input name="author_id" value="{{ ruser.id }}"></p>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <br/>
+
+    {% if results.posts != None %}
+    <p>Posts</p>
+    <ul>
+        {% for post in results.posts %}
+        <li>
+            <form id="post" action="{% url 'post' %}" method="post">
+                {% csrf_token %}
+                <br/>
+                <button type="submit"> {{ post.title }}</button>
+                <p hidden><input name="post_id" value="{{ post.id }}"></p>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+{% endblock %}

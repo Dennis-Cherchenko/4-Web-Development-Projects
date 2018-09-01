@@ -1,0 +1,135 @@
+{% extends "users/layout.html" %}
+
+{% block body %}
+
+<h2>Menu</h2>
+<br/>
+<h4>Select the items to add:</h4>
+
+
+<input type="radio" name="item_type" value="pizza"> Pizza &nbsp; &nbsp;
+<input type="radio" name="item_type" value="sub"> Sub &nbsp; &nbsp;
+<input type="radio" name="item_type" value="pasta"> Pasta &nbsp; &nbsp;
+<input type="radio" name="item_type" value="salad"> Salad &nbsp; &nbsp;
+<input type="radio" name="item_type" value="dinner_platter"> Dinner Platter &nbsp; &nbsp;
+
+<br/>
+<br/>
+
+<form id="pizza" action="{% url 'add_to_cart' %}" method="post" style="display:none">
+    {% csrf_token %}
+    Select kind:
+    <input type="radio" class="pizza_kind" name="kind" value="Regular"> Regular &nbsp;
+    <input type="radio" class="pizza_kind" name="kind" value="Sicilian"> Sicilian
+    <br/>
+    Select size:
+    <input type="radio" class="pizza_size" name="size" value="S"> Small &nbsp;
+    <input type="radio" class="pizza_size" name="size" value="L"> Large
+    <br/>
+    <br/>
+    Select toppings (5 maximumn):
+    <br/>
+    {% for pizza_topping in menu_objects.pizza_toppings %}
+        <span><input class="pizza_topping" type="checkbox" name="pizza_toppings"
+                value="{{ pizza_topping.id }}"> {{ pizza_topping.name }} &nbsp; &nbsp;</span>
+        <br/>
+    {% empty %}
+        <li>No toppings</li>
+    {% endfor %}
+
+    <br/>
+    <br/>
+    <input type="hidden" name="item_type" value="pizza">
+    <button type="submit" id="add_to_cart_pizza" disabled="true">Add to Cart</button>
+</form>
+
+<form id="sub" action="{% url 'add_to_cart' %}" method="post" style="display:none">
+    {% csrf_token %}
+    Select kind:
+    <br/>
+    {% for sub in menu_objects.sub_kind_enum %}
+        <input type="radio" class="sub_kind" name="kind" value="{{ sub.kind }}"> {{ sub.kind }}
+        <br/>
+    {% empty %}
+        <li>No subs</li>
+    {% endfor %}
+    <br/>
+
+
+    Select size:
+    <br/>
+    <input type="radio" class="sub_size" name="size" value="S"> Small &nbsp;
+    <input type="radio" class="sub_size" name="size" value="L"> Large
+    <br/>
+    <br/>
+    Select toppings:
+    <br/>
+    {% for sub_topping in menu_objects.sub_toppings %}
+        <input class="topping_checkbox" type="checkbox" name="sub_toppings" value="{{ sub_topping.id }}">
+        {{ sub_topping.name }}
+        <br/>
+    {% empty %}
+        <li>No toppings</li>
+    {% endfor %}
+    <br/>
+    <br/>
+    <input type="hidden" name="item_type" value="sub">
+    <button type="submit" id="add_to_cart_sub" disabled="true">Add to Cart</button>
+</form>
+
+<form id="pasta" action="{% url 'add_to_cart' %}" method="post" style="display:none">
+    {% csrf_token %}
+    Select kind:
+    <br/>
+    {% for pasta in menu_objects.pastas %}
+        <input class="pasta_kind" type="radio" name="pasta_id" value="{{ pasta.id }}">
+        {{ pasta.kind }}
+        <br/>
+    {% empty %}
+        <li>No pastas</li>
+    {% endfor %}
+    <br/>
+    <br/>
+    <input type="hidden" name="item_type" value="pasta">
+    <button type="submit" id="add_to_cart_pasta" disabled="true">Add to Cart</button>
+</form>
+
+<form id="salad" action="{% url 'add_to_cart' %}" method="post" style="display:none">
+    {% csrf_token %}
+    Select kind:
+    <br/>
+    {% for salad in menu_objects.salads %}
+        <input class="salad_kind" type="radio" name="salad_id" value="{{ salad.id }}">
+        {{ salad.kind }}
+        <br/>
+    {% empty %}
+        <li>No salads</li>
+    {% endfor %}
+    <br/>
+    <br/>
+    <input type="hidden" name="item_type" value="salad">
+    <button type="submit" id="add_to_cart_salad" disabled="true">Add to Cart</button>
+</form>
+
+<form id="dinner_platter" action="{% url 'add_to_cart' %}" method="post" style="display:none">
+    {% csrf_token %}
+    Select kind:
+    <br/>
+    {% for dinner_platter in menu_objects.dinner_platter_kind_enum %}
+        <input class="dinner_platter_kind" type="radio" name="kind" value="{{ dinner_platter.kind }}">
+        {{ dinner_platter.kind }}
+        <br/>
+    {% empty %}
+        <li>No dinner platters</li>
+    {% endfor %}
+    <br/>
+    Select size:
+    <input type="radio" class="dinner_platter_size" name="size" value="S"> Small
+    <input type="radio" class="dinner_platter_size" name="size" value="L"> Large
+    <br/>
+    <br/>
+    <input type="hidden" name="item_type" value="dinner_platter">
+    <button type="submit" id="add_to_cart_dinner_platter" disabled="true">Add to Cart</button>
+</form>
+
+{% endblock %}

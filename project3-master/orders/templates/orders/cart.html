@@ -1,0 +1,31 @@
+{% extends "users/layout.html" %}
+
+{% block body %}
+
+Items in the cart: <br/>
+
+<form action="{% url 'cart' %}" method="post">
+    {% csrf_token %}
+    {% for cart_item in cart_items %}
+        {% load staticfiles %}
+        <!-- trash icon by Smashicons user on flaticon.com,
+            https://www.flaticon.com/free-icon/garbage_149343#term=trash&page=1&position=1 -->
+        <input type="image" src="{% static "trash.svg" %}" style="height:15px; width:15px"
+                    name="delete_cart_item_id" value="{{ cart_item.ci_id }}"/>
+        {{ cart_item.text }}
+        <br/>
+    {% empty %}
+        <li>Cart is empty</li>
+    {% endfor %}
+</form>
+<br/>
+Total: ${{ total }}
+<br/>
+<form action="{% url 'confirmation' %}" method="post" onsubmit="return confirm('Are you sure you want to submit this order?');">
+    {% csrf_token %}
+    <button id="checkout_button" type="submit" disabled="true">Checkout</button>
+</form>
+
+<br/>
+
+{% endblock %}

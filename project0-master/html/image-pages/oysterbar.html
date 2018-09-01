@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Used to include header, gallery, and footer, tutorial at: https://www.w3schools.com/howto/howto_html_include.asp -->
+    <script src="https://www.w3schools.com/lib/w3.js"></script>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <!-- Other CSS -->
+    <link rel="stylesheet" type="text/css" href="../../css/style.css">
+    <title>Oyster Bar - Dennis Photography</title>
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-4"></div>
+            <div class="col-sm-4">
+                <div w3-include-html="header_image-pages.html"></div>
+                <hr/>
+                <img src="../../img/oysterbar.jpg" style="width: 100%" alt="pool">
+                <br/>
+                <br/>
+                <div class="body-pictureTitle">Oyster Bar @ Boston</div>
+                <br/>
+                <br/>
+                <div class="body-text">
+                    Quo usque tandem abutere, Catilina, patientia nostra? quam diu etiam furor iste tuus nos eludet? quem ad finem sese effrenata iactabit audacia?
+                    <div class="body-authorCredit">
+                        Cicero, Catullus
+                    </div>
+                    <br/>
+                    <div w3-include-html="../gallery.html"></div>
+                    <div w3-include-html="footer_image-pages.html"></div>
+                </div>
+                <div class="col-sm-4"></div>
+            </div>
+        </div>
+        <script>
+            w3.includeHTML();
+        </script>
+</body>
+
+</html>

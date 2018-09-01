@@ -1,0 +1,21 @@
+$primaryColor: #eeffcc;
+$mainTextColor: black;
+$backgroundColor: #1E3647;
+$urlcolor: #66D9EF;
+
+/*****************************************************************/
+
+%commonTextStyle {
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+    text-decoration: none;
+    color: $mainTextColor;
+}
+
+body {
+    @extend %commonTextStyle;
+    background-color: $backgroundColor;
+}
+
+a:link, a:visited {
+    color: #66D9EF;
+}

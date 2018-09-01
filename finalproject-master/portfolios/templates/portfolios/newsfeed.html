@@ -1,0 +1,92 @@
+{% extends "users/layout.html" %}
+{% block body %}
+
+
+    <form id="post" action="{% url 'newsfeed' %}" method="post">
+        {% csrf_token %}
+
+        <select name="likes_filter">
+            {% for option in like_filters_enum %}
+                {% if likes_filter == option %}
+                    <option value="{{option}}" selected="selected">{{option}}</option>
+                {% else %}
+                    <option value="{{option}}" >{{ option }}</option>
+                {% endif %}
+
+            {% endfor %}
+        </select>
+        <button type="submit">Change view</button>
+        <p hidden><input name="author_id" value="{{ author.id }}"></p>
+    </form>
+    <br/>
+    <br/>
+    <b>Most Liked Posts ({{ likes_filter }}):</b>
+    <br/>
+    <table class="table">
+        <tbody>
+            <tr>
+                {% for post in most_liked_posts %}
+                    <td style = "width:16.66%">
+                        <form id="post" action="{% url 'post' %}" method="post" style="display: inline-block;">
+                            {% csrf_token %}
+
+                            {% if post.image.url is not None %}
+                                <input type="image" src="{{ post.image.url }}" border="0"
+                                    style="width: auto; max-width: 100%; height: auto; max-height: 100%;"
+                                    alt="Submit" />
+                                <br/>
+                                <small>{{ post.title }}</small>
+                            {% else %}
+                                <button type="submit">{{ post.title }}</button>
+                                <br/>
+                                <small>Written Work</small>
+                            {% endif %}
+                            <br/>
+                            <p hidden><input name="post_id" value="{{ post.id }}"></p>
+                        </form>
+                    </td>
+            {% if not forloop.last and forloop.counter|divisibleby:6 %}
+            </tr>
+            <tr>
+            {% endif %}
+            {% endfor %}
+            </tr>
+        <tbody>
+    </table>
+    <br/>
+    <br/>
+    <b>Browse all posts</b>
+    <br/>
+    <table class="table">
+        <tbody>
+          <tr>
+              {% for post in all_posts %}
+                  <td style = "width:16.66%">
+                      <form id="post" action="{% url 'post' %}" method="post" style="display: inline-block;">
+                         {% csrf_token %}
+
+                        {% if post.image.url is not None %}
+                         <input type="image" src="{{ post.image.url }}" border="0"
+                              style="width: auto; max-width: 100%; height: auto; max-height: 100%;"  alt="Submit" />
+                        <br/>
+                        <small>{{ post.title }}</small>
+                        {% else %}
+
+                        <button type="submit">{{ post.title }}</button>
+                        <br/>
+                        <small>Written Work</small>
+                        {% endif %}
+                        <br/>
+                         <p hidden><input name="post_id" value="{{ post.id }}"></p>
+                      </form>
+                  </td>
+                  {% if not forloop.last and forloop.counter|divisibleby:4 %}
+                      </tr>
+                      <tr>
+                  {% endif %}
+              {% endfor %}
+          </tr>
+        <tbody>
+      </table>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "users/layout.html" %}
+
+{% block body %}
+
+
+
+{% for order in order_item_boxes %}
+    Order number: <b>{{ order.order_id }}</b>, by {{ order.username }} on {{ order.timestamp }}. &nbsp;Status:
+    {% if order.status == "Completed" %}
+        <span style="color:#1e991a">{{ order.status }} </span>
+    {% else %}
+       <span style="color:blue">{{ order.status }} </span>
+    {% endif %}
+
+   <form id="orders" action="{% url 'orders_manager' %}" method="post">
+        {% csrf_token %}
+        Change status: <input type="text" name="status" placeholder="new status"/>
+        <input type="hidden" name="order_id" value="{{ order.order_id }}">
+        <input type="submit" value="change"/>
+    </form>
+    &nbsp; &nbsp;</span>
+    <br/>
+    {% for cart_item in order.cart_item_boxes %}
+        &nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;{{ cart_item.text }}
+        <br/>
+    {% empty %}
+        ERROR, there should not exist order without items
+    {% endfor %}
+
+
+    <br/>
+{% empty %}
+    <li>There are no orders</li>
+{% endfor %}
+
+
+
+{% endblock %}
